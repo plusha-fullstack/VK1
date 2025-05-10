@@ -92,17 +92,11 @@
 
 2. **Переход в директорию проекта:**
    ```bash
-   cd proto
+   cd VK1
    ```
 
 3. **Генерация кода Protobuf:**
-   Из корня директории `grpc-subpub` выполните команду `protoc` для генерации Go-кода из `.proto` файла:
-   ```bash
-   protoc --go_out=. --go_opt=paths=source_relative \
-          --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-          proto/pubsub.proto
-   ```
-   Это создаст или обновит файлы `proto/pubsub.pb.go` и `proto/pubsub_grpc.pb.go`.
+   Сгенерированные файлы уже добавлены в коммит!
 
 4. **Загрузка зависимостей:**
    Убедитесь, что все зависимости Go-модулей загружены:
@@ -128,10 +122,10 @@
    ```bash
    GRPC_PORT=9090 ./pubsub_server
    ```
-   Если порт не указан, будет использоваться значение по умолчанию — `8080` (или то, которое задано по умолчанию в конфиге).
+   Если порт не указан, будет использоваться значение по умолчанию — `9090`.
 
    **Ожидаемый вывод:**
-   Вы должны увидеть логи, сообщающие о том, что сервер успешно запущен и слушает указанный порт, например:
+   Вы должны увидеть логи, сообщающие о том, что сервер успешно запущен и слушает указанный порт.
    Сервер теперь работает и готов принимать соединения.
 
 ## Взаимодействие с сервисом (с помощью `grpcurl`)
@@ -180,10 +174,4 @@
 
 *   Чтобы остановить клиент `Subscribe` (`grpcurl`), нажмите `Ctrl+C` в его терминале.
 *   Чтобы остановить gRPC сервер, перейдите в терминал, где запущен `./pubsub_server`, и нажмите `Ctrl+C`. Вы должны увидеть сообщения о завершении работы сервера.
-
-grpcurl -plaintext -proto ./pubsub.proto -d '{"key": "news", "data": "Hello from gRPC!"}' localhost:9090 proto.PubSub/Publish
-
-grpcurl -plaintext -proto ./pubsub.proto -d '{"key": "news"}' localhost:9090 proto.PubSub/Subscribe
-
-grpcurl -plaintext -proto ./pubsub.proto -d '{"key": "news", "data": "Another event!"}' localhost:9090 proto.PubSub/Publish
 
